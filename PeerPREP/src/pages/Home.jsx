@@ -12,7 +12,6 @@ const Home = ()=>{
         e.preventDefault();
         const id = uuidV4();
         setRoomId(id);
-        // console.log(id);
         toast.success('Created new room');
     }
 
@@ -21,11 +20,11 @@ const Home = ()=>{
             toast.error('Room ID & Username is required');
             return;
         }
-
+        console.log('Joining room with ID:', roomId, 'and username:', username);
         //Redirect
         navigate(`/editor/${roomId}`,{
             state:{
-                username,
+                username
             }
         })
 
@@ -39,10 +38,10 @@ const Home = ()=>{
                 <div className="inputGroup">
                     <input type="text" className="inputBox" placeholder='Enter ROOM ID' onChange={(e)=>{setRoomId(e.target.value)}} value={roomId}/>
                     <input type="text" className="inputBox" placeholder='Enter Name' onChange={(e)=>{setUsername(e.target.value)}} value={username}/>
-                    <button className="btn joinBtn" onClick={joinRoom}>Join</button>
+                    <button className="btn joinBtn" onClick={joinRoom} disabled={!roomId || !username}>Join</button>
                     <span className="createInfo">
                         If you don't have an invite then create &nbsp; 
-                        <a onClick={createNewRoom} href="" className="createNewBtn">New room</a>
+                        <a onClick={createNewRoom} href="#" className="createNewBtn">New room</a>
                     </span>
                 </div>
                 

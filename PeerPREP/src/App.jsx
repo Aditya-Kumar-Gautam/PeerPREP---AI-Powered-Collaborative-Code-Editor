@@ -1,8 +1,7 @@
-import { useState } from 'react'
 
 import './App.css'
 import {BrowserRouter,Routes,Route} from 'react-router-dom'
-import Editor from './pages/Editor Page'
+import EditorPage from './pages/EditorPage'
 import Home from './pages/Home'
 import {Toaster} from 'react-hot-toast';
 
@@ -15,8 +14,8 @@ function App() {
       </div>
       <BrowserRouter>
         <Routes>
-          <Route path='/' element = {<Home/>}></Route>
-          <Route path='/editor/:roomID' element={<Editor/>}></Route>
+          <Route path='/' element = {<Home/>}/>
+          <Route path="/editor/:roomId" element={<EditorPage />}/>
         </Routes>
       </BrowserRouter>
     </>
