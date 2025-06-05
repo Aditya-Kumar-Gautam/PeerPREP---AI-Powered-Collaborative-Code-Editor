@@ -553,9 +553,23 @@ footer{
   border: none;
   background-color: #eee;
   color: #000;
-  font-size: 16px;
+  font-size: 16px ;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 700;
+  
 }
 
 .send-button{
   place-self: end;;
+}
+
+.ps-box{
+  resize: none;
+  overflow-y: scroll; 
+  scrollbar-width: none; 
+  -ms-overflow-style: none;
+}
+
+textarea::-webkit-scrollbar {
+  display: none;
 }
