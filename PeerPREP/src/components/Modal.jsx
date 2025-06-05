@@ -15,11 +15,9 @@ export const Modal = ({onClose}) => {
     const [questionNumber, setQuestionNumber] = useState();
     const [received_question,setReceived_question] = useState([]);
     const [problemStatement,setProblemStatement] = useState('');
-    // useEffect(()=>{
-    //     console.log(received_question);
-    // },[received_question]);
 
 
+    // Form Submission
     function handleSubmit(e) {
         e.preventDefault();
         const formData = new FormData(e.target);
@@ -30,8 +28,11 @@ export const Modal = ({onClose}) => {
 
         findQuestion(data.questionNumber);
 
+        e.target.reset();
+
     }
 
+    // Updates ProblemStatement everytime a new question is received and displays it in textarea
     useEffect(()=>{
         if(received_question.length!=0){
             const formatted_examples=parseExamples(received_question[0].example);
@@ -101,13 +102,10 @@ export const Modal = ({onClose}) => {
         }
         setReceived_question(data);
 
-        // console.log(response.text);
-
-        console.log(response.text);
     
     }
 
-
+    // formats the examples received
     function parseExamples(received_question) {
       const examples = [];
       let currentExample = {};
@@ -169,11 +167,6 @@ export const Modal = ({onClose}) => {
 
 
   return (
-
-    
-    
-
-
     <div ref={modalRef} onClick={closeModal} className='question-overlay'>
         <div className='question-box'>
             <button className="closebutton" onClick={onClose}><X size={30}/></button>
