@@ -516,6 +516,7 @@ footer{
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.3);
+  /* background-color: transparent; */
   backdrop-filter: blur(4px);
 }
 
@@ -572,4 +573,15 @@ footer{
 
 textarea::-webkit-scrollbar {
   display: none;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Hide arrows in Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
 }

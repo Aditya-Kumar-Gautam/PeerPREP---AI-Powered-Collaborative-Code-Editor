@@ -32,7 +32,7 @@ const Editor = ({socketRef, roomId}) => {
       id: 'java', 
       name: 'Java', 
       mode: 'text/x-java',
-      sample: 'class Solution {\n    public static void main(String[] args) {\n        System.out.println("Hello World!");\n    }\n}' 
+      sample: 'class Main {\n    public static void main(String[] args) {\n        System.out.println("Hello World!");\n    }\n}' 
     },
     { 
       id: 'cpp', 

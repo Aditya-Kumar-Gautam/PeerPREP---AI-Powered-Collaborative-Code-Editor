@@ -76,6 +76,13 @@ io.on('connection', (socket) => {
 
 
 
+//GEMINI API 
+
+
+
+
+
+
 
 
 

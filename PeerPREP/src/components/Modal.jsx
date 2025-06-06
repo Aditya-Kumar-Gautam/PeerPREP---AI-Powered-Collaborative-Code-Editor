@@ -46,13 +46,15 @@ export const Modal = ({onClose}) => {
         else{
             setProblemStatement("");
         }
+
+         
     },[received_question])
 
     
 
     // Gemini API 
 
-    const ai = new GoogleGenAI({apiKey:"GEMINI_API_KEY"});
+    const ai = new GoogleGenAI({apiKey:"AIzaSyAxZ25NpgNJv48cuNvG1PNpHSf156nWobY"});
 
     async function findQuestion(qNumber) {
         const response = await ai.models.generateContent({
