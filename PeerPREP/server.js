@@ -83,7 +83,7 @@ io.on('connection', (socket) => {
 
 //GEMINI API 
 
-const ai = new GoogleGenAI({apiKey:"AIzaSyAxZ25NpgNJv48cuNvG1PNpHSf156nWobY"});
+const ai = new GoogleGenAI({apiKey:"GEMINI_API_KEY"});
 
 app.post('/api/question',async (req,res)=>{
     try {
