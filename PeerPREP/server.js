@@ -4,11 +4,16 @@ import { Server } from 'socket.io';
 // Note: Socket from socket.io-client is not needed for server-side code    
 import { Socket } from 'socket.io-client';
 import ACTIONS from './src/Actions.js';
+import { GoogleGenAI, Type } from '@google/genai';
+import cors from 'cors';
+
 
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
+app.use(express.json());
+app.use(cors());
 
 const userSocketMap = {};
 
@@ -78,6 +83,70 @@ io.on('connection', (socket) => {
 
 //GEMINI API 
 
+const ai = new GoogleGenAI({apiKey:"AIzaSyAxZ25NpgNJv48cuNvG1PNpHSf156nWobY"});
+
+app.post('/api/question',async (req,res)=>{
+    try {
+        
+      const  qNumber  = req.body.qNumber;
+
+      
+      const response = await ai.models.generateContent({
+        model: "gemini-2.0-flash",
+        contents: `Find the problem statement for question number ${qNumber} from leetcode.`,
+        config: {
+          responseMimeType: "application/json",
+          responseSchema: {
+            type: Type.ARRAY,
+            items: {
+              type: Type.OBJECT,
+              properties: {
+                qNo: {
+                  type: Type.STRING,
+                },
+                problem_statement: {
+                  type: Type.ARRAY,
+                  items: {
+                    type: Type.STRING,
+                  },
+                },
+                example: {
+                  type: Type.ARRAY,
+                  items: {
+                    type: Type.STRING,
+                  },
+                },
+                constraints: {
+                  type: Type.ARRAY,
+                  items: {
+                    type: Type.STRING,
+                  },
+                },
+              },
+              propertyOrdering: [
+                "qNo",
+                "problem_statement",
+                "example",
+                "constraints",
+              ],
+            },
+          },
+        },
+      });
+
+      let data = [];
+      try {
+        data = JSON.parse(response.text);
+      } catch (e) {
+        data = [];
+      }
+
+      res.json({ question: data });
+    } catch (err) {
+      console.log(err);
+    }
+    
+})
 
 
 

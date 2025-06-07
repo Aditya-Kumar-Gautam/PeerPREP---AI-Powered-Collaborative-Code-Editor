@@ -1,6 +1,6 @@
 import React, { use,useEffect,useRef,useState } from 'react'
 import { X , SendHorizontal} from 'lucide-react';
-import { GoogleGenAI, Type } from '@google/genai';
+
 
 
 export const Modal = ({onClose}) => {
@@ -54,58 +54,81 @@ export const Modal = ({onClose}) => {
 
     // Gemini API 
 
-    const ai = new GoogleGenAI({apiKey:"GEMINI_API_KEY"}); // Replace with your actual Gemini API key
+    // const ai = new GoogleGenAI({apiKey:"GEMINI_API_KEY"}); // Replace with your actual Gemini API key
 
-    async function findQuestion(qNumber) {
-        const response = await ai.models.generateContent({
-            model: "gemini-2.0-flash",
-            contents:
-                `Find the problem statement for question number ${qNumber} from leetcode.`,
-            config: {
-                responseMimeType: "application/json",
-                responseSchema: {
-                    type: Type.ARRAY,
-                    items: {
-                        type: Type.OBJECT,
-                        properties: {
-                            qNo: {
-                                type: Type.STRING,
-                            },
-                            problem_statement: {
-                                type: Type.ARRAY,
-                                items: {
-                                    type: Type.STRING,
-                                },
-                            },
-                            example:{
-                                type: Type.ARRAY,
-                                items: {
-                                    type: Type.STRING,
-                                },
-                            },
-                            constraints: {
-                                type: Type.ARRAY,
-                                items: {
-                                    type: Type.STRING,
-                                },
-                            }
-                        },
-                        propertyOrdering: ["qNo", "problem_statement", "example", "constraints"],
-                    },
-                },
-            },
-        });
+    // async function findQuestion(qNumber) {
+    //     const response = await ai.models.generateContent({
+    //         model: "gemini-2.0-flash",
+    //         contents:
+    //             `Find the problem statement for question number ${qNumber} from leetcode.`,
+    //         config: {
+    //             responseMimeType: "application/json",
+    //             responseSchema: {
+    //                 type: Type.ARRAY,
+    //                 items: {
+    //                     type: Type.OBJECT,
+    //                     properties: {
+    //                         qNo: {
+    //                             type: Type.STRING,
+    //                         },
+    //                         problem_statement: {
+    //                             type: Type.ARRAY,
+    //                             items: {
+    //                                 type: Type.STRING,
+    //                             },
+    //                         },
+    //                         example:{
+    //                             type: Type.ARRAY,
+    //                             items: {
+    //                                 type: Type.STRING,
+    //                             },
+    //                         },
+    //                         constraints: {
+    //                             type: Type.ARRAY,
+    //                             items: {
+    //                                 type: Type.STRING,
+    //                             },
+    //                         }
+    //                     },
+    //                     propertyOrdering: ["qNo", "problem_statement", "example", "constraints"],
+    //                 },
+    //             },
+    //         },
+    //     });
 
-        let data = [];
-        try {
-            data = JSON.parse(response.text);
-        } catch (e) {
-            data = [];
-        }
-        setReceived_question(data);
+    //     let data = [];
+    //     try {
+    //         data = JSON.parse(response.text);
+    //     } catch (e) {
+    //         data = [];
+    //     }
+    //     setReceived_question(data);
 
     
+    // }
+
+    // Function to find question by number
+    
+    async function findQuestion(qNumber){
+      try{
+        const response = await fetch('http://localhost:5000/api/question',{
+          method:'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({qNumber})
+        })
+        const data = await response.json();
+        setReceived_question(data.question || []);
+      }catch(err){
+        setReceived_question([]);
+      }
+
     }
+
+
+
+
+
+
 
     // formats the examples received
     function parseExamples(received_question) {
